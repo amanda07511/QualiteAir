@@ -1,4 +1,26 @@
 <resources>
-    <string name="app_name">QualiteAir</string>
+    <string name="app_name">Quality Air</string>
+    <string name="app_title">Quality Air</string>
     <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_search">Search a city</string>
+    <string name="action_back">Return</string>
+    <string name="search">Search</string>
+    <string name="submitted">Submmited</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="d_cities"> of your cities.</string>
+    <string name="delete">You delete </string>
+    <string name="d_add"> to your cities.</string>
+    <string name="add">You add </string>
+    <string name="level">Level pollution:  </string>
+    <string name="good">, Good </string>
+    <string name="mod">, Moderate </string>
+    <string name="bad">, Unhealthy </string>
+    <string name="update">Last update: </string>
+    <string name="lang">Language: </string>
+    <string name="result">There is not coincidences, try again!</string>
+    <string name="en">English </string>
+    <string name="fr">French </string>
+    <string name="es">Spanish </string>
+    <string name="save">Save </string>
 </resources>
