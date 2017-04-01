@@ -81,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
                 @Override
                 public boolean onLongClick(View v)
                 {
-                    //showPopup(v, getAdapterPosition());
+                    showPopup(v, getAdapterPosition());
                     return false;
                 }
             });
@@ -148,6 +148,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public void showPopup(final View v, int pos) {
+
+        PopupMenu popup = new PopupMenu(mCtx, v);
+        popup.inflate(R.menu.menu_select);
+        position=pos;
+
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.one:{
+                        String name=cityName.get(position);
+                        int id= cityid.get(position);
+
+                        MainActivity.database.open();
+                        MainActivity.database.removeObj(id);
+
+                        Toast.makeText(v.getContext() , re.getString(R.string.delete)+name+re.getString(R.string.d_cities), Toast.LENGTH_SHORT).show();
+
+                        mDataset.remove(position);
+                        notifyItemRemoved(position);
+
+                    }
+                    return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+
+        popup.show();
     }
 
 
