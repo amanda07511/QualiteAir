@@ -135,9 +135,23 @@ public class MainActivity extends AppCompatActivity {
 
                         Gson gson = new Gson();
                         GlobalObject obj = gson.fromJson(response, GlobalObject.class);
+                        if(obj==null)
+                            Log.d("ERROR VOLLEY:", "ESTOY VACIO POR DENTRO!!");
+                        else if(obj.getRxs().getObs().get(0).getMsg()==null){
 
-                        initialCities.add(obj);
-                        mAdapter.notifyDataSetChanged();
+                            Log.d("ERROR VOLLEY:", "MSG ESTA VACIO!!!!!");
+                            Intent i= new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(i);
+                        }
+                        else if(obj.getRxs().getObs().get(0).getMsg().equals("404")){
+                            Log.d("ERROR VOLLEY:", "MSG ESTA VACIO!!!!!");
+                        }
+                        else {
+                            initialCities.add(obj);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+
 
                     }
                 }, new com.android.volley.Response.ErrorListener() {

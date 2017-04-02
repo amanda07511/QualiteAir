@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import iut.qualiteair.Details;
 import iut.qualiteair.MainActivity;
 import iut.qualiteair.R;
 import iut.qualiteair.models.GlobalObject;
@@ -70,9 +71,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Intent intent = new Intent(mCtx, details.class);
-                    //intent.putExtra("id",cityid.get(getAdapterPosition()));
-                    //mCtx.startActivity(intent);
+                    Intent intent = new Intent(mCtx, Details.class);
+                    intent.putExtra("id",cityid.get(getAdapterPosition()));
+                    mCtx.startActivity(intent);
 
                 }
             });

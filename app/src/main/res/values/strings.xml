@@ -23,4 +23,9 @@
     <string name="fr">French </string>
     <string name="es">Spanish </string>
     <string name="save">Save </string>
+    <string name="forecast">Forecast </string>
+    <string name="weather"> Weather</string>
+    <string name="humidity"> Humidity</string>
+    <string name="particulas">Inhalable particles</string>
+    <string name="sulfur">Sulfur dioxide</string>
 </resources>
