@@ -1,10 +1,11 @@
-AIRQUALITY—  Sample App for Android
+AIRQUALITY 
+Sample App for Android
 This is a sample app using diferents library's for android, based in http://aqicn.org/api/ API
 
 About Aqicn
 Is an API which provide information about the enviroment measure like air quality, humidity, tempeture etc. of differents points of the word.
 
-About Egg
+About Airquality
 Is an app where you can search a citie and save it to see more information about it and see the if there's an ideal air condition.
 
 What do (03.04.2017):
