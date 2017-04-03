@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ## [0.2.3] - 2017-04-03
 ### Added
 - Push notification when a favorite city have an iaqi > 100
+- Fuction for get nearest station, with google play services 
 
 ## [0.2.2] - 2017-04-03
 ### Added
