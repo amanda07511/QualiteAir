@@ -169,8 +169,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
                         MainActivity.database.open();
                         MainActivity.database.removeObj(id);
 
-                        Toast.makeText(v.getContext() , re.getString(R.string.delete)+name+re.getString(R.string.d_cities), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext() , re.getString(R.string.delete)+" "+name+" "+re.getString(R.string.d_cities), Toast.LENGTH_SHORT).show();
 
+                        cityid.remove(position);
+                        cityName.remove(position);
                         mDataset.remove(position);
                         notifyItemRemoved(position);
 

@@ -1,12 +1,20 @@
 package iut.qualiteair;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -61,6 +69,7 @@ public class Details extends AppCompatActivity {
     private TextView maxH;
     private TextView last;
     private int id;
+    private String urlCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +121,7 @@ public class Details extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
+            sendEmail();
             return true;
         }
         if (id == R.id.action_refresh) {
@@ -151,6 +161,7 @@ public class Details extends AppCompatActivity {
 
                             JSONObject city=msg.getJSONObject("city");
                             title.setText(city.getString("name"));
+                            urlCity = city.getString("url");
 
                             JSONArray iaqi=msg.getJSONArray("iaqi");
                             if(iaqi!=null){
@@ -273,6 +284,53 @@ public class Details extends AppCompatActivity {
 
         chart.setColumnChartData(data);
 
+    }
+
+    private void sendEmail(){
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View dialoglayout = inflater.inflate(R.layout.alert_dialog, null);
+        final EditText Vemail = (EditText) dialoglayout.findViewById(R.id.email);
+        final EditText Vsubject = (EditText) dialoglayout.findViewById(R.id.subject);
+
+        Button btnEnviarMail = (Button) dialoglayout.findViewById(R.id.btn_send);
+        if(!Vemail.getText().toString().trim().equals(""))
+            btnEnviarMail.setEnabled(true);
+
+
+        btnEnviarMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String subject = Vsubject.getText().toString();
+                String email = Vemail.getText().toString();
+
+                String body="Hi, \nOne of your friends if worried about you and he/she wants you kwon the situation of "+title.getText()+".\n"+
+                        "\nThis is a little review:\n"
+                        +getResources().getString(R.string.particulas).toString()+"\nMIN: "+minPM10.getText().toString()+"  MAX: "+maxPM10.getText().toString()+
+                        "\n"+getResources().getString(R.string.sulfur).toString()+"\nMIN: "+ minNO2.getText().toString()+"  MAX: "+ maxNO2.getText().toString()+"\n"+
+                        getResources().getString(R.string.weather).toString()+"\nMIN: "+minW.getText().toString()+" MAX: "+maxW.getText().toString()+
+                        "\n"+getResources().getString(R.string.humidity).toString()+"\nMIN: "+minH.getText().toString()+"%  MAX: "+maxH.getText().toString()
+                        +"\n \n \nGet more information here: "+urlCity;
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + email));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    //Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Details.this);
+        builder.setView(dialoglayout);
+        builder.show();
     }
 
 

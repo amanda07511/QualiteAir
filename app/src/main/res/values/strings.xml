@@ -28,4 +28,10 @@
     <string name="humidity"> Humidity</string>
     <string name="particulas">Inhalable particles</string>
     <string name="sulfur">Sulfur dioxide</string>
+    <string name="email">To</string>
+    <string name="subject">Subject</string>
+    <string name="send">Enviar</string>
+|   <string name="mode">Night mode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
