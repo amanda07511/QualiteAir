@@ -10,24 +10,24 @@ Is an app where you can search a citie and save it to see more information about
 
 What it do (03.04.2017):
 
-See the nearest station.
+-See the nearest station.
 
-Search a city by name.
+-Search a city by name.
 
-Could save cities in your favorites.
+-Could save cities in your favorites.
 
-Delete cities of your favorites.
+-Delete cities of your favorites.
 
-See details of your favorites cities.
+-See details of your favorites cities.
 
-Share information of a citie.
+-Share information of a citie.
 
-Change language(English, french, spanish).
+-Change language(English, french, spanish).
 
-Change to night mode.
+-Change to night mode.
 
 
-Clone the Repository
+-Clone the Repository
 
 As usual, you get started by cloning the project to your local machine:
 
@@ -36,15 +36,15 @@ $ git://github.com/amanda07511/QualiteAir---Android.git
 Prerequisites
 Add libraries
 
-Volley
+-Volley
 
-Hellocharts
+-Hellocharts
 
-Gson
+-Gson
 
-Google play services
+-Google play services
 
-Google play services location
+-Google play services location
 
 
 Now that you have cloned the repo:
