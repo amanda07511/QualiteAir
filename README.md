@@ -8,16 +8,23 @@ Is an API which provide information about the enviroment measure like air qualit
 About Airquality
 Is an app where you can search a citie and save it to see more information about it and see the if there's an ideal air condition.
 
-What do (03.04.2017):
+What it do (03.04.2017):
 
--See the nearest station.
--Search a city by name.
--Could save cities in your favorites.
--Delete cities of your favorites.
--See details of your favorites cities.
--Share information of a citie.
--Change language(English, french, spanish).
--Change to night mode.
+See the nearest station.
+
+Search a city by name.
+
+Could save cities in your favorites.
+
+Delete cities of your favorites.
+
+See details of your favorites cities.
+
+Share information of a citie.
+
+Change language(English, french, spanish).
+
+Change to night mode.
 
 
 Clone the Repository
@@ -28,11 +35,16 @@ $ git://github.com/amanda07511/QualiteAir---Android.git
 
 Prerequisites
 Add libraries
--Volley
--Hellocharts
--Gson
--Google play services
--Google play services location
+
+Volley
+
+Hellocharts
+
+Gson
+
+Google play services
+
+Google play services location
 
 
 Now that you have cloned the repo:
