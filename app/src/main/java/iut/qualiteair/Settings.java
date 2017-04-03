@@ -30,13 +30,16 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
 
+        //Call the preferences stoked in LanguageHelper
         LanguagueHelper.setLanguage(this);
+        //Adding Back button
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        //Create a variable wich recive Prefereces of system
         SharedPreferences pref = this.getSharedPreferences("Mypfre", MODE_PRIVATE);
-
+        //Instance for edit the preferences
         editor = pref.edit();
 
+        //Get last status of the radion button
         if (pref.getString("lang_code", "en").equals("en")) {
             selected = (RadioButton) findViewById(R.id.radioButton_en);
             selected.setChecked(true);
@@ -48,13 +51,15 @@ public class Settings extends AppCompatActivity {
             selected.setChecked(true);
         }
 
-
+        //Saving the changes in language configuration
         button = (Button) findViewById(R.id.b_save);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Save the prefrence
                 LanguagueHelper.setLanguage(Settings.this);
                 getSupportActionBar().setTitle(getResources().getString(R.string.app_title));
+                //Reset the activity for see the changes
                 Intent intent = new Intent(Settings.this, Settings.class);
                 startActivity(intent);
                 finish();
@@ -64,12 +69,13 @@ public class Settings extends AppCompatActivity {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-                RadioButton rb = (RadioButton) findViewById(checkedId);
 
+                RadioButton rb = (RadioButton) findViewById(checkedId);
+                // checkedId which RadioButton selected
                 switch (checkedId) {
                     case R.id.radioButton_en:
                         if (rb.isChecked()) {
+                            //Set prefrerences to english
                             editor.putString("lang_code", "en");
                             editor.commit();
                             Toast.makeText(getApplicationContext(), "You change to " + rb.getText(), Toast.LENGTH_SHORT).show();
@@ -77,6 +83,7 @@ public class Settings extends AppCompatActivity {
                         break;
                     case R.id.radioButton_fr:
                         if (rb.isChecked()) {
+                            //Set prefrerences to french
                             editor.putString("lang_code", "fr");
                             editor.commit();
                             Toast.makeText(getApplicationContext(), "Vouz avez changé a " + rb.getText(), Toast.LENGTH_SHORT).show();
@@ -84,6 +91,7 @@ public class Settings extends AppCompatActivity {
                         break;
                     case R.id.radioButton_es:
                         if (rb.isChecked()) {
+                            //Set prefrerences to spanish
                             editor.putString("lang_code", "es");
                             editor.commit();
                             Toast.makeText(getApplicationContext(), "Usted cambio a " + rb.getText(), Toast.LENGTH_SHORT).show();
@@ -95,7 +103,7 @@ public class Settings extends AppCompatActivity {
 
 
         mySwitch = (Switch) findViewById(R.id.switchStatus);
-
+        //Get last status switch
         if(pref.getBoolean("mode", false ) == false){
             mySwitch.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -105,28 +113,28 @@ public class Settings extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        
-        //attach a listener to check for changes in state
         mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
+                    //If is checked, mode night will be activated
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     Toast.makeText(getApplicationContext(),"Modo nocturno activado", Toast.LENGTH_SHORT).show();
                     editor.putBoolean("mode", true);
                     editor.commit();
-
+                    //Reset the activity to see the changes
                     Intent i= new Intent(Settings.this, Settings.class);
                     startActivity(i);
                     finish();
 
                 }
                 else{
+                    //If is not checked, mode night will be desactivated
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     editor.putBoolean("mode", false);
                     editor.commit();
                     Toast.makeText(getApplicationContext(),"Modo nocturno desactivado", Toast.LENGTH_SHORT).show();
-
+                    //Reset the activity to see the changes
                     Intent i= new Intent(Settings.this, Settings.class);
                     startActivity(i);
                     finish();
@@ -152,32 +160,4 @@ public class Settings extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.radioButton_en:
-                if (checked) {
-                    editor.putString("lang_code", "en");
-                    editor.commit();
-
-                }
-                break;
-            case R.id.radioButton_fr:
-                if (checked) {
-                    editor.putString("lang_code", "fr");
-                    editor.commit();
-
-                }
-                break;
-            case R.id.radioButton_es:
-                if (checked){
-                    editor.putString("lang_code", "es");
-                    editor.commit();
-                }
-                break;
-        }
-    }
 }

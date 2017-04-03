@@ -37,6 +37,5 @@
         android:text="@string/send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_send"
-        android:enabled="false"/>
+        android:id="@+id/btn_send" />
 </LinearLayout>

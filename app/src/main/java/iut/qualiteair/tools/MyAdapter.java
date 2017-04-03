@@ -35,6 +35,7 @@ import iut.qualiteair.models.MessageObject;
 
 /**
  * Created by amanda on 13/02/2017.
+ * Recicler view for Activity Main
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
@@ -45,12 +46,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     public ArrayList<Integer> cityid= new ArrayList<>();
     public static int position;
     public Resources re;
-    String message;
 
 
     public class ViewHolder  extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
 
+        // UI elements
         public TextView global;
         public TextView gps;
         public TextView max;
@@ -63,6 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
         public ViewHolder(View v) {
             super(v);
 
+            //Initializing items
             global = (TextView) v.findViewById(R.id.globalinfo);
             gps = (TextView) v.findViewById(R.id.gps);
             max = (TextView) v.findViewById(R.id.pm10Max);
@@ -72,21 +73,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
             table =(TableLayout) v.findViewById(R.id.row1);
 
 
-
+            //Adding a action when user press in a row
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //Start Dtails Activity
                     Intent intent = new Intent(mCtx, Details.class);
                     intent.putExtra("id",cityid.get(getAdapterPosition()));
                     mCtx.startActivity(intent);
 
                 }
             });
-
+            //Adding a action when user make a long press in a row
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v)
                 {
+                    //Call method showPopup
                     showPopup(v, getAdapterPosition());
                     return false;
                 }
@@ -116,11 +119,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
 
+        //create a msg object with the information of the models
         MessageObject msg = mDataset.get(position).getRxs().getObs().get(0).getMsg();
+        //create a list of names and ids
         cityName.add(msg.getCity().getName());
         cityid.add(msg.getCity().getIdx());
 
-
+        //Change text in the UI
         for(int i=0;i<msg.getIaqi().size();i++) {
             if(msg.getIaqi().get(i).getP().contains("pm10")) {
                 holder.max.setText(msg.getIaqi().get(i).getV().get(2).toString());
@@ -131,10 +136,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
                 } else if(msg.getIaqi().get(i).getV().get(0)<100) {
                     holder.table.setBackgroundColor(ContextCompat.getColor(mCtx, R.color.orange));
                     holder.level.setText(re.getString(R.string.level)+" "+msg.getIaqi().get(i).getV().get(0).toString() +re.getString(R.string.mod));
+                    //Call a notification if the nivel of pollution is more than 100
+                    notification(msg.getCity().getName());
                 } else {
                     holder.table.setBackgroundColor(ContextCompat.getColor(mCtx, R.color.red));
                     holder.level.setText(re.getString(R.string.level)+" "+msg.getIaqi().get(i).getV().get(0).toString() +re.getString(R.string.bad));
-                    notification(msg.getCity().getName());
                 }
             }
             if(msg.getIaqi().get(i).getP().contains("t")) {
@@ -157,29 +163,36 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
         return mDataset.size();
     }
 
+    /**
+     * Create a pop menu w
+     * */
     public void showPopup(final View v, int pos) {
 
         PopupMenu popup = new PopupMenu(mCtx, v);
         popup.inflate(R.menu.menu_select);
         position=pos;
 
-
+        //If one of the items is pressed
+        //In this case we just use it for show of options delete
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.one:{
+                        //Get information of the position
                         String name=cityName.get(position);
                         int id= cityid.get(position);
-
+                        //Remove the object of the database
                         MainActivity.database.open();
                         MainActivity.database.removeObj(id);
-
+                        //Show a toas
                         Toast.makeText(v.getContext() , re.getString(R.string.delete)+" "+name+" "+re.getString(R.string.d_cities), Toast.LENGTH_SHORT).show();
-
+                        //Remove the infomation of the position
                         cityid.remove(position);
                         cityName.remove(position);
+                        //Remove the information of the dataset
                         mDataset.remove(position);
+                        //Notify the change
                         notifyItemRemoved(position);
 
                     }
@@ -196,6 +209,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
 
     public void notification(String name){
+
         DangerNotification.notify(mCtx,name, 1);
 
     }

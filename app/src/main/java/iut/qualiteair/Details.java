@@ -78,7 +78,7 @@ public class Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        //Set up the language configuration
+        //Call the preferences stoked in LanguageHelper
         LanguagueHelper.setLanguage(this);
         //Adding Back button
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -123,11 +123,12 @@ public class Details extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Call method of sendEmail
         if (id == R.id.action_send) {
             sendEmail();
             return true;
         }
+        //Reset the Activity
         if (id == R.id.action_refresh) {
             Intent refresh = new Intent(this, Details.class);
             refresh.putExtra("id",this.id);
@@ -145,6 +146,9 @@ public class Details extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method for get data of  the api by an ID
+     * */
     private void getDataFromUrl(String url) {
 
         // Instantiate the RequestQueue.
@@ -240,6 +244,9 @@ public class Details extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    /**
+     * Method cheate a column chart
+     * */
     private void generateDefaultData() {
 
         //Define the number of colums by array of min values
@@ -298,26 +305,36 @@ public class Details extends AppCompatActivity {
 
     }
 
+    /**
+     * Method for send a email
+     * */
     private void sendEmail(){
 
         LayoutInflater inflater = getLayoutInflater();
-
+        //Create a alert dialog with a layout
         View dialoglayout = inflater.inflate(R.layout.alert_dialog, null);
         final EditText Vemail = (EditText) dialoglayout.findViewById(R.id.email);
         final EditText Vsubject = (EditText) dialoglayout.findViewById(R.id.subject);
-
         Button btnEnviarMail = (Button) dialoglayout.findViewById(R.id.btn_send);
-        if(!Vemail.getText().toString().trim().equals(""))
-            btnEnviarMail.setEnabled(true);
-
 
         btnEnviarMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //Get the text of the values
                 String subject = Vsubject.getText().toString();
                 String email = Vemail.getText().toString();
 
+                //Validate that the user introduce an email
+                if(email.equals("")){
+                    Toast.makeText(Details.this, "Add a email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Create a default subject if the user not introduces one
+                if(subject.equals(""))
+                    subject= "Information of air quality";
+
+                //Create the body of the email with  UI information
                 String body="Hi, \nOne of your friends if worried about you and he/she wants you kwon the situation of "+title.getText()+".\n"+
                         "\nThis is a little review:\n"
                         +getResources().getString(R.string.particulas).toString()+"\nMIN: "+minPM10.getText().toString()+"  MAX: "+maxPM10.getText().toString()+
@@ -326,6 +343,7 @@ public class Details extends AppCompatActivity {
                         "\n"+getResources().getString(R.string.humidity).toString()+"\nMIN: "+minH.getText().toString()+"%  MAX: "+maxH.getText().toString()
                         +"\n \n \nGet more information here: "+urlCity;
 
+                //Create the emain intent
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:" + email));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
@@ -334,7 +352,7 @@ public class Details extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Send email using..."));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    //Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Details.this, "No email clients installed.", Toast.LENGTH_SHORT).show();
                 }
 
             }

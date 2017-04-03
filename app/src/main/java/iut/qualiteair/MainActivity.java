@@ -56,6 +56,7 @@ import java.util.List;
 import iut.qualiteair.models.GlobalObject;
 import iut.qualiteair.tools.MyAdapter;
 import iut.qualiteair.tools.db.DatabaseHandler;
+import iut.qualiteair.tools.db.LanguagueHelper;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -110,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         lblTemperature = (TextView) findViewById(R.id.lblT);
         lblPM10=(TextView) findViewById(R.id.lblPM);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
 
         //Setting configurations
         mRecyclerView.setHasFixedSize(true);

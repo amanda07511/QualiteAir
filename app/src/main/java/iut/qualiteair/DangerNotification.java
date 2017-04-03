@@ -47,10 +47,8 @@ public class DangerNotification {
                 .setContentTitle("Danger")
                 .setContentText("Health warnings of emergency conditions on one of your favorites cities. The entire population is more likely to be affected.")
 
-                // All fields below this line are optional.
 
-                // Use a default priority (recognized on devices running Android
-                // 4.1 or later)
+                // Use a default priority (recognized on devices running Android 4.1 or later)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                 // Provide a large icon, shown with the notification in the
