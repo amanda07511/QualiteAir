@@ -1,0 +1,56 @@
+# Change Log
+All notable changes to this project will be documented in this file.
+
+
+## [Unreleased]
+### Added
+- CHANGELOG
+
+## [0.2.3] - 2017-04-03
+### Added
+- Push notification when a favorite city have an iaqi > 100
+
+## [0.2.2] - 2017-04-03
+### Added
+-Function of send mail and refresh in Details Activity.
+-Function to change to nigth mode in settings
+
+## [0.2.1] - 2017-04-02
+### Added
+-Details Activity for show more information about a citie
+-Hellochart for crate a clolumchart in Details activity with forecast information
+
+## [0.1.1] - 2017-04-02
+### Added
+-Settings Activity and LanguageHelper for changue language
+-Strings.xml(fr), Strin.xml(es)
+
+### Changed
+- ic_launch 
+
+
+## [0.1.0] - 2017-04-01
+### Added
+-Search activity 
+-Models Results, ResultObject,StationObject,TimeObject for map the response of the API(call by name)
+-ReciclerView and MyAdapter2 to show a list of cities Search
+-DatabaseStruct, DatabaseHelper, DatabaseHandler for manage a local database
+-Popup menu_select for add delete action in My Adapter.
+
+## [0.0.2] - 2017-04-01
+### Added
+- Models GlobalObject, Data, MessageObject, CityObject, IaqiObject, RxsObject for map the response of the API (call by id)
+-ReciclerView and MyAdapter to show a list of cities in Main 
+
+## 0.0.1 - 2017-04-01
+### Added
+- Star of the project 
+
+
+[0.2.3]: https://github.com/amanda07511/QualiteAir/commit/f9765fdb327b2b63d0e7e914218747b5a4af2e73
+[0.2.2]: https://github.com/amanda07511/QualiteAir/commit/96f93b4d31f6872022311892b4b67558aae8e325
+[0.2.1]: https://github.com/amanda07511/QualiteAir/commit/6f41b8b45934f1a55fc54a2fc35946974d3417ea
+[0.1.1]: https://github.com/amanda07511/QualiteAir/commit/dfb613fc83d269d0117bf12e60d892e0e8cbabef
+[0.1.0]: https://github.com/amanda07511/QualiteAir/commit/07ae4bd8383b95e2d5ad6e125a18f17bd555d4db
+[0.0.2]: https://github.com/amanda07511/QualiteAir/commit/0cb17e45c41c78093d4d0d3fca698f1cb1e4930d
+[0.0.1]: https://github.com/amanda07511/QualiteAir/commit/78ddc8466a82a4be97fea3d51dc9bf8c06b31110
