@@ -8,6 +8,8 @@ Is an API which provide information about the enviroment measure like air qualit
 About Airquality
 Is an app where you can search a citie and save it to see more information about it and see the if there's an ideal air condition.
 
+Compatible with android 4.4 kitkat
+
 What it do (03.04.2017):
 
 -See the nearest station.
