@@ -46,18 +46,20 @@ import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class Details extends AppCompatActivity {
-
+    //Components
     private JSONObject jsonRespuesta;
+    private ArrayList<String> dates = new ArrayList<>();
+    private ArrayList<String> hours = new ArrayList<>();
+    private ArrayList<Integer> min = new ArrayList<>();
+    private ArrayList<Integer> max= new ArrayList<>();
+    //Components for create chart
     private ColumnChartView chart;
     private ColumnChartData data;
     private boolean hasAxes = true;
     private boolean hasAxesNames = true;
     private boolean hasLabels = false;
     private boolean hasLabelForSelected = false;
-    private ArrayList<String> dates = new ArrayList<>();
-    private ArrayList<String> hours = new ArrayList<>();
-    private ArrayList<Integer> min = new ArrayList<>();
-    private ArrayList<Integer> max= new ArrayList<>();
+    // UI elements
     private TextView title;
     private TextView minPM10;
     private TextView maxPM10;
@@ -76,14 +78,15 @@ public class Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        //Set up the language configuration
         LanguagueHelper.setLanguage(this);
+        //Adding Back button
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        //Getting information sended by the Intent
         id = getIntent().getExtras().getInt("id");
 
-        getDataFromUrl("https://api.waqi.info/api/feed/@"+id+"/obs.fr.json?token=af073d16e3707f6d085660cfcd0137a61b961365");
-
-
+        //Initializing items of content_details
         title = (TextView) findViewById(R.id.detailTitle);
         minPM10 = (TextView) findViewById(R.id.min10);
         maxPM10 = (TextView) findViewById(R.id.max10);
@@ -94,9 +97,10 @@ public class Details extends AppCompatActivity {
         minH = (TextView) findViewById(R.id.minh);
         maxH = (TextView) findViewById(R.id.maxh);
         last = (TextView) findViewById(R.id.updateD);
-
         chart = (ColumnChartView) findViewById(R.id.chart);
 
+        //Calling information of the Method
+        getDataFromUrl("https://api.waqi.info/api/feed/@"+id+"/obs.fr.json?token=af073d16e3707f6d085660cfcd0137a61b961365");
 
     }
     @Override
@@ -142,7 +146,7 @@ public class Details extends AppCompatActivity {
     }
 
     private void getDataFromUrl(String url) {
-        Log.d("URL REQUEST:", url );
+
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -153,8 +157,10 @@ public class Details extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            //Convert the response to a JSONObject
                             jsonRespuesta = new JSONObject(response);
 
+                            //Get Objects of the json
                             JSONObject rxs =jsonRespuesta.getJSONObject("rxs");
                             JSONObject obs=rxs.getJSONArray("obs").getJSONObject(0);
                             JSONObject msg=obs.getJSONObject("msg");
@@ -183,6 +189,7 @@ public class Details extends AppCompatActivity {
                                 JSONObject data=aqi.getJSONObject(i);
                                 JSONArray v= data.getJSONArray("v");
 
+                                //Get simple date and simple time of a xs:date:time
                                 Date dt = null;
                                 try {
 
@@ -214,6 +221,7 @@ public class Details extends AppCompatActivity {
 
                             }
 
+                            //Call Method for generate the chart
                             generateDefaultData();
 
                         } catch (JSONException e) {
@@ -225,7 +233,7 @@ public class Details extends AppCompatActivity {
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //mTextView.setText("That didn't work!");
+
             }
         });
         // Add the request to the RequestQueue.
@@ -233,13 +241,14 @@ public class Details extends AppCompatActivity {
     }
 
     private void generateDefaultData() {
-        Log.d("generateDefaultData:", "AQUI ESTOY "+ min.size());
 
+        //Define the number of colums by array of min values
         int numColumns = min.size();
+        //I just will take 10 values if the array if so big
         if(min.size()>10)
             numColumns = 10;
 
-        // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
+        // I use 2 subcolumn in each of one column, one for min values, other for max values.
         List<Column> columns = new ArrayList<Column>();
         List<SubcolumnValue> values;
         for (int i = 0; i < numColumns; ++i) {
@@ -248,31 +257,34 @@ public class Details extends AppCompatActivity {
             values.add(new SubcolumnValue(min.get(i),ChartUtils.pickColor()));
             values.add(new SubcolumnValue(max.get(i),ChartUtils.pickColor()));
 
-
+            //Add the values to the column
             Column column = new Column(values);
+            //Add Labels
             column.setHasLabels(hasLabels);
             column.setHasLabelsOnlyForSelected(hasLabelForSelected);
             columns.add(column);
         }
-
+        //Set the information of the chart
         data = new ColumnChartData(columns);
 
         if (hasAxes) {
 
             List<AxisValue> list = new ArrayList<AxisValue>();
-
+            //Create a array of labels of hours values
             for(int i = 0; i< numColumns; ++i){
                 AxisValue value = new AxisValue(i);
                 value.setLabel(String.valueOf(hours.get(i)));
                 list.add(value);
             }
-
+            //Set labels in x with array
             Axis axisX = new Axis(list);
-
+            //Set labels in Y by default
             Axis axisY = new Axis().setHasLines(true);
-            if (hasAxesNames) {
 
+            if (hasAxesNames) {
+                //Set title in X with  start date and finish date
                 axisX.setName(getResources().getString(R.string.forecast)+ ": "+dates.get(0)+" - "+dates.get(10));
+                //Set title of  Y
                 axisY.setName("AQI "+ getResources().getString(R.string.forecast));
             }
             data.setAxisXBottom(axisX);

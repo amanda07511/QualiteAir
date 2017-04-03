@@ -1,10 +1,14 @@
 package iut.qualiteair.tools;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import iut.qualiteair.DangerNotification;
 import iut.qualiteair.Details;
 import iut.qualiteair.MainActivity;
 import iut.qualiteair.R;
@@ -129,6 +134,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
                 } else {
                     holder.table.setBackgroundColor(ContextCompat.getColor(mCtx, R.color.red));
                     holder.level.setText(re.getString(R.string.level)+" "+msg.getIaqi().get(i).getV().get(0).toString() +re.getString(R.string.bad));
+                    notification(msg.getCity().getName());
                 }
             }
             if(msg.getIaqi().get(i).getP().contains("t")) {
@@ -189,6 +195,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     }
 
 
+    public void notification(String name){
+        DangerNotification.notify(mCtx,name, 1);
+
+    }
 
 
 

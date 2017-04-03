@@ -31,7 +31,19 @@
     <string name="email">To</string>
     <string name="subject">Subject</string>
     <string name="send">Enviar</string>
-|   <string name="mode">Night mode</string>
+    <string name="Near">Near of you</string>
+    <string name="Favorites">Favorites</string>
+    |
+    <string name="mode">Night mode</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="danger_notification_title_template">Warning: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="danger_notification_placeholder_text_template">Members of sensitive groups may experience health effects. The general public is not likely to be affected. Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.
+    </string>
+    <string name="action_reply">Reply</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
